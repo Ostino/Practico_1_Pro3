@@ -1,21 +1,28 @@
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
+
 
 public class Panel extends JPanel implements PropertyChangeListener {
-    private List<Integer> arreglo =new ArrayList<>();
+
     private Linea modelo;
 
     public Panel(Linea l) {
-    modelo =l;
-    modelo.addObserver(this);
+    this.modelo = l;
+    this.modelo.addObserver(this);
+    modelo.Anadir_lineas();
+    }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        IDibujador dibujo = new DibujoLinea(modelo);
+        dibujo.dibujar(g);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
     repaint();
     }
+
 
 }
