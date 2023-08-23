@@ -17,12 +17,13 @@ public class Panel extends JPanel implements PropertyChangeListener {
         super.paintComponent(g);
         IDibujador dibujo = new DibujoLinea(modelo);
         dibujo.dibujar(g);
+        IDibujador dibujos = new DibujoLineaOrd(modelo);
+        dibujos.dibujar(g);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
     repaint();
     }
-
 
 }

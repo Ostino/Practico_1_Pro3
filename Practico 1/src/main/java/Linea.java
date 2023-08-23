@@ -1,19 +1,25 @@
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Arrays;
 import java.util.Random;
 
-public class Linea {
-    private int xi;
-    private int yi;
+public class Linea implements  Comparable<Linea>{
+
     private int xf;
     private int yf;
     private int tamano;
     private PropertyChangeSupport observado;
     public   Linea[] arreglo = new Linea[200];
+    public Linea[] arreglordenado = new Linea[200];
+
+    public Linea[] getArreglordenado() {
+        return arreglordenado;
+    }
 
     public Linea(){
         this.xf=generador();
         this.yf=generador();
+        tamano= (int) Math.sqrt((xf*xf)+(yf*yf));
         observado = new PropertyChangeSupport(this);
 
     }
@@ -39,8 +45,8 @@ public class Linea {
             Linea linea = new Linea();
             arreglo[i] = linea;
         }
+        arreglordenado=Arrays.copyOf(arreglo,arreglo.length);
         observado.firePropertyChange("Arreglo",oldarreglo, this.arreglo);
-
     }
     public void Formatear_arreglo() {
         Linea[] oldarreglo = this.arreglo;
@@ -49,45 +55,41 @@ public class Linea {
         }
         observado.firePropertyChange("Arreglo",oldarreglo, this.arreglo);
     }
-
-
-    public int getXi() {
-        return xi;
+    public  void ordenar_arreglo (){
+        Arrays.sort(arreglo);
     }
-
-    public void setXi(int xi) {
-        this.xi = xi;
+    public boolean Check (){
+        for (int i = 0; i < arreglo.length-1; i++) {
+            if (arreglo[i].getTamano()<=arreglo[i+1].getTamano()){
+            }else{
+                return false;
+            }
+        }
+        return true;
     }
-
-    public int getYi() {
-        return yi;
-    }
-
-    public void setYi(int yi) {
-        this.yi = yi;
-    }
-
     public int getXf() {
         return xf;
     }
-
-    public void setXf(int xf) {
-        this.xf = xf;
-    }
-
     public int getYf() {
         return yf;
     }
-
-    public void setYf(int yf) {
-        this.yf = yf;
-    }
-
     public int getTamano() {
         return tamano;
     }
-
     public void setTamano(int tamano) {
         this.tamano = tamano;
+    }
+    public void animacion( int milisegundos) {
+            try {
+
+                Thread.sleep(milisegundos);
+            } catch(Exception q) {
+
+            }
+        }
+
+    @Override
+    public int compareTo(Linea o) {
+        return Integer.compare(this.tamano,o.getTamano());
     }
 }

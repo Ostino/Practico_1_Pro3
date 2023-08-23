@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Test extends JFrame {
 
@@ -8,6 +9,7 @@ public class Test extends JFrame {
     private JButton stop = new JButton("Stop");
     private JButton check = new JButton("Check");
     private  Linea modelo = new Linea();
+    private boolean listo = true;
     Panel panel = new Panel(modelo);
     Panel panel2 = new Panel(modelo);
     public Test() {
@@ -37,11 +39,31 @@ public class Test extends JFrame {
         reset.addActionListener(e -> {
         modelo.Formatear_arreglo();
         modelo.Anadir_lineas();
-        repaint();
+       repaint();
+        });
+        play.addActionListener(e -> {
+            LimpiarPanel(panel);
+            modelo.ordenar_arreglo();
+            for (int i = 0; i < modelo.arreglordenado.length; i++) {
+                System.out.println( modelo.arreglordenado[i].getTamano());
+            }
+            repaint();
+        });
+        check.addActionListener(e -> {
+            if (modelo.Check() == true){
+                JOptionPane.showMessageDialog(null,"Esta ordenado");
+            }else{
+                JOptionPane.showMessageDialog(null,"Esta desordenado");
+            }
+
+            ;
         });
     }
+    public  void LimpiarPanel(Panel panel){
 
+    }
     public static void main(String[] args) {
         Test test = new Test();
+
     }
 }
